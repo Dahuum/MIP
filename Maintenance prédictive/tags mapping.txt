@@ -1,0 +1,7 @@
+    'timestamp',
+    'Ampérage du moteur',
+    'Température coté opposé',
+    'Température coté moteur',
+    'Vibration coté opposé',
+    'Vibration coté moteur',
+    'Ouverture volets'

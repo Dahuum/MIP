@@ -1,0 +1,62 @@
+# OCP Predictive Maintenance Hackathon - Python Dependencies
+# ============================================================
+# Install all packages: pip install -r requirements.txt
+
+# Core Data Science
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+lightgbm>=4.0.0
+imbalanced-learn>=0.11.0
+
+# Deep Learning (optional, for LSTM/CNN models)
+tensorflow>=2.13.0
+keras>=2.13.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+
+# Dashboard & Web Interface
+streamlit>=1.25.0
+dash>=2.11.0
+
+# Excel File Handling
+openpyxl>=3.1.0
+xlrd>=2.0.1
+
+# Time Series Analysis
+statsmodels>=0.14.0
+prophet>=1.1.0
+
+# Model Interpretability
+shap>=0.42.0
+
+# Progress Bars
+tqdm>=4.65.0
+
+# Utilities
+python-dateutil>=2.8.2
+pytz>=2023.3
+
+# Optional: For deployment
+flask>=2.3.0
+fastapi>=0.100.0
+uvicorn>=0.23.0
+
+# Optional: For advanced feature engineering
+ta>=0.10.0
+tsfel>=0.1.4
+
+# Optional: For hyperparameter tuning
+optuna>=3.2.0
+
+# Development Tools (optional)
+jupyter>=1.0.0
+ipykernel>=6.23.0
+black>=23.3.0
