@@ -10,9 +10,12 @@ import { AlertPanel, AlertBanner } from '@/components/alerts/AlertPanel';
 import { SensorChart, RiskHistoryChart } from '@/components/visualizations/Charts';
 import { FeatureImportance } from '@/components/visualizations/FeatureImportance';
 import { DashboardStats, ROICalculator } from '@/components/stats/StatsCard';
+import { SettingsBar } from '@/components/controls/SettingsBar';
 import { SensorData, PredictionResult, ScenarioPreset } from '@/types';
 import { DEFAULT_SENSORS, SCENARIO_PRESETS, RISK_LEVELS, SENSOR_THRESHOLDS, MODEL_INFO } from '@/lib/constants';
 import { getRiskLevel, formatCurrency, generateTimeLabels, addNoise } from '@/lib/utils';
+import { I18nProvider, useI18n } from '@/lib/i18n';
+import { ThemeProvider } from '@/lib/theme';
 
 const API_URL = 'http://localhost:8000';
 
@@ -58,7 +61,9 @@ interface HistoricFailure {
   sensors?: SensorData;
 }
 
-export default function Dashboard() {
+function DashboardContent() {
+  const { t } = useI18n();
+  
   // State
   const [sensors, setSensors] = useState<SensorData>(DEFAULT_SENSORS);
   const [currentScenario, setCurrentScenario] = useState<string | null>('normal');
@@ -385,7 +390,7 @@ export default function Dashboard() {
     }
 
     // Initialize diagnostics
-    type IssueType = 'none' | 'dust_accumulation' | 'grease_check' | 'both' | 'electrical' | 'overheating' | 'bearing' | 'bearing_axle' | 'power_loss';
+    type IssueType = 'none' | 'imbalance' | 'grease_check' | 'both' | 'electrical' | 'overheating' | 'bearing' | 'bearing_axle' | 'power_loss';
     let issueType: IssueType = 'none';
     let diagnosticMessage = '';
     let dustProbability = 0.05;
@@ -412,12 +417,12 @@ export default function Dashboard() {
       diagnosticMessage = '🔧 BEARING/AXLE PROBLEM: Check bearing alignment and axle condition';
       dustProbability = 0.20;
     } else if (flowLow && !solidHigh) {
-      issueType = 'dust_accumulation';
+      issueType = 'imbalance';
       const flowDeficit = (400 - sensors.pump_flow_rate) / 200;
       dustProbability = Math.min(0.30 + flowDeficit * 0.30, 0.60);
       diagnosticMessage = `🌫️ IMBALANCE DETECTED: Dust accumulation due to low pump flow (${sensors.pump_flow_rate.toFixed(0)} m³/h)`;
     } else if (solidHigh || effectiveSolidRate > 1.0) {
-      issueType = 'dust_accumulation';
+      issueType = 'imbalance';
       dustProbability = Math.min(0.60, 0.30 + (effectiveSolidRate - 1.0) * 0.15);
       diagnosticMessage = flowLow 
         ? `🌫️ IMBALANCE DETECTED: Dust in system (Solid Rate: ${effectiveSolidRate.toFixed(1)}%, Flow: ${sensors.pump_flow_rate.toFixed(0)} m³/h)`
@@ -489,7 +494,7 @@ export default function Dashboard() {
       recommendedActions = ['Lubricate bearings immediately', 'Check bearing alignment', 'Inspect for wear patterns'];
     } else if (issueType === 'bearing_axle') {
       recommendedActions = ['Stop and inspect bearing assembly', 'Check axle alignment', 'Verify shaft balance'];
-    } else if (issueType === 'dust_accumulation') {
+    } else if (issueType === 'imbalance') {
       recommendedActions = ['Clean fan blades and filters', 'Inspect air intake system', 'Check dust extraction'];
     } else if (issueType === 'both') {
       recommendedActions = ['Full maintenance inspection required', 'Clean all filters', 'Lubricate bearings'];
@@ -554,9 +559,9 @@ export default function Dashboard() {
             <div className="hidden md:flex items-center gap-6">
               <nav className="flex gap-1">
                 {[
-                  { id: 'live', label: 'Live Simulation', icon: '🔴' },
-                  { id: 'analysis', label: 'Analysis', icon: '📊' },
-                  { id: 'model', label: 'Model Info', icon: '🧠' },
+                  { id: 'live', label: t.header.live, icon: '🔴' },
+                  { id: 'analysis', label: t.header.analysis, icon: '📊' },
+                  { id: 'model', label: t.header.model, icon: '🧠' },
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -577,11 +582,7 @@ export default function Dashboard() {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="text-right hidden sm:block">
-                <p className="text-xs text-gray-400">Line 307 • Fan C07</p>
-                <p className="text-sm text-white font-medium">Real-time Monitoring</p>
-              </div>
-              <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+              <SettingsBar />
             </div>
           </div>
         </div>
@@ -591,9 +592,9 @@ export default function Dashboard() {
       <div className="md:hidden sticky top-16 z-40 glass border-b border-white/10 px-4 py-2">
         <div className="flex gap-2">
           {[
-            { id: 'live', label: 'Live', icon: '🔴' },
-            { id: 'analysis', label: 'Analysis', icon: '📊' },
-            { id: 'model', label: 'Model', icon: '🧠' },
+            { id: 'live', label: t.header.live, icon: '🔴' },
+            { id: 'analysis', label: t.header.analysis, icon: '📊' },
+            { id: 'model', label: t.header.model, icon: '🧠' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -630,54 +631,51 @@ export default function Dashboard() {
               {/* Quick Scenarios */}
               <QuickScenarioBar currentScenario={currentScenario} onSelect={handleScenarioSelect} />
 
-              {/* Main Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Left Column - Fan Visualization & Risk */}
-                <div className="lg:col-span-1 space-y-6">
-                  {/* Fan Status Card */}
+              {/* Main Grid - Two Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Left Column - Fan Status (Compact) */}
+                <div className="lg:col-span-4">
                   <motion.div 
-                    className="card p-6 text-center"
+                    className="card p-5 h-full"
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                   >
-                    <h3 className="text-lg font-semibold text-white mb-4">Fan C07 Status</h3>
+                    <h3 className="text-base font-semibold text-white text-center mb-3">{t.dashboard.systemStatus}</h3>
                     
-                    <div className="flex justify-center mb-4">
+                    <div className="flex justify-center mb-3">
                       <FanIcon 
                         spinning={true} 
                         speed={fanSpeed}
-                        size={120}
+                        size={100}
                         status={fanStatus}
                       />
                     </div>
 
-                    <RiskGauge value={currentPrediction.risk_probability} size="md" />
+                    <RiskGauge value={currentPrediction.risk_probability} size="sm" />
                   </motion.div>
                 </div>
 
-                {/* Right Column - Alert */}
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Alert Panel */}
+                {/* Right Column - Alert Panel */}
+                <div className="lg:col-span-8">
                   <AlertPanel prediction={currentPrediction} />
                 </div>
               </div>
 
-              {/* Full Width Sensor Controls */}
-              <div className="card p-6 w-full">
-                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <span>🎛️</span> Adjust Sensor Values
-                  <span className="text-xs text-gray-400 font-normal ml-2">
-                    (Simulate different scenarios)
-                  </span>
-                </h3>
+              {/* Sensor Controls */}
+              <div className="card p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-base font-semibold text-white flex items-center gap-2">
+                    <span>🎛️</span> {t.sensors.adjustSensors}
+                  </h3>
+                </div>
                 <SensorControls 
                   sensors={sensors} 
                   onChange={setSensors}
                 />
               </div>
 
-              {/* Full Width Scenario Selector */}
-              <div className="card p-6">
+              {/* Scenario Selector */}
+              <div className="card p-5">
                 <ScenarioSelector 
                   currentScenario={currentScenario}
                   onSelect={handleScenarioSelect}
@@ -699,32 +697,32 @@ export default function Dashboard() {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 <motion.div className="card p-4" whileHover={{ scale: 1.02 }}>
                   <span className="text-2xl">🔬</span>
-                  <h3 className="text-gray-400 text-sm mt-2">Tests Performed</h3>
+                  <h3 className="text-gray-400 text-sm mt-2">{t.stats.testsPerformed}</h3>
                   <p className="text-2xl font-bold text-white">{sessionStats.testsPerformed}</p>
                 </motion.div>
                 <motion.div className="card p-4" whileHover={{ scale: 1.02 }}>
                   <span className="text-2xl">📊</span>
-                  <h3 className="text-gray-400 text-sm mt-2">Sensor Changes</h3>
+                  <h3 className="text-gray-400 text-sm mt-2">{t.stats.totalInteractions}</h3>
                   <p className="text-2xl font-bold text-white">{sessionStats.totalInteractions}</p>
                 </motion.div>
                 <motion.div className="card p-4" whileHover={{ scale: 1.02 }}>
                   <span className="text-2xl">⚠️</span>
-                  <h3 className="text-gray-400 text-sm mt-2">High Risk Events</h3>
+                  <h3 className="text-gray-400 text-sm mt-2">{t.stats.highRiskEvents}</h3>
                   <p className="text-2xl font-bold text-amber-400">{sessionStats.highRiskEvents}</p>
                 </motion.div>
                 <motion.div className="card p-4" whileHover={{ scale: 1.02 }}>
                   <span className="text-2xl">🚨</span>
-                  <h3 className="text-gray-400 text-sm mt-2">Critical Alerts</h3>
+                  <h3 className="text-gray-400 text-sm mt-2">{t.stats.criticalAlerts}</h3>
                   <p className="text-2xl font-bold text-red-400">{sessionStats.criticalAlerts}</p>
                 </motion.div>
                 <motion.div className="card p-4" whileHover={{ scale: 1.02 }}>
                   <span className="text-2xl">📈</span>
-                  <h3 className="text-gray-400 text-sm mt-2">Max Risk Reached</h3>
+                  <h3 className="text-gray-400 text-sm mt-2">{t.stats.maxRiskReached}</h3>
                   <p className="text-2xl font-bold text-white">{sessionStats.maxRiskReached.toFixed(1)}%</p>
                 </motion.div>
                 <motion.div className="card p-4" whileHover={{ scale: 1.02 }}>
                   <span className="text-2xl">⏱️</span>
-                  <h3 className="text-gray-400 text-sm mt-2">Session Duration</h3>
+                  <h3 className="text-gray-400 text-sm mt-2">{t.stats.sessionDuration}</h3>
                   <p className="text-2xl font-bold text-white">
                     {Math.floor((Date.now() - sessionStats.sessionStartTime.getTime()) / 60000)}m
                   </p>
@@ -734,10 +732,7 @@ export default function Dashboard() {
               {/* Real-Time Risk Chart */}
               <div className="card p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <span>📈</span> Live Risk History
-                  <span className="text-xs text-gray-400 font-normal ml-2">
-                    (Updates as you adjust sensors)
-                  </span>
+                  <span>📈</span> {t.stats.riskHistory}
                 </h3>
                 {riskHistory.length > 0 ? (
                   <RiskHistoryChart data={riskHistory.map(h => ({ time: h.time, risk: h.risk }))} />
@@ -751,10 +746,7 @@ export default function Dashboard() {
               {/* Dynamic Feature Importance - Based on YOUR interactions */}
               <div className="card p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <span>🎯</span> Variables Most Likely to Cause Failure
-                  <span className="text-xs text-gray-400 font-normal ml-2">
-                    (Ranked by YOUR testing - most impactful first)
-                  </span>
+                  <span>🎯</span> {t.dashboard.featureImportance}
                 </h3>
                 
                 {sensorHistory.length > 0 ? (
@@ -782,14 +774,14 @@ export default function Dashboard() {
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex items-center gap-2">
                               <span className="text-lg font-bold text-white">#{idx + 1}</span>
-                              <span className="text-sm text-gray-300">{feature.name}</span>
+                              <span className="text-sm text-gray-300">{t.sensors.sensorNames[feature.sensor] || feature.name}</span>
                               <span className={`px-2 py-0.5 rounded text-xs ${categoryColors[feature.category]} text-white`}>
                                 {feature.category}
                               </span>
                             </div>
                             <div className="text-right text-sm">
-                              <span className="text-gray-400">{feature.interactions} changes</span>
-                              <span className="text-white ml-2">Δ {feature.avgRiskDelta.toFixed(1)}% avg</span>
+                              <span className="text-gray-400">{feature.interactions} {t.modelInfo.changes}</span>
+                              <span className="text-white ml-2">Δ {feature.avgRiskDelta.toFixed(1)}% {t.modelInfo.avgDelta}</span>
                             </div>
                           </div>
                           <div className="h-3 bg-white/10 rounded-full overflow-hidden">
@@ -807,7 +799,7 @@ export default function Dashboard() {
                     {dynamicFeatureImportance.filter(f => f.interactions === 0).length > 0 && (
                       <div className="mt-4 pt-4 border-t border-white/10">
                         <p className="text-sm text-gray-500">
-                          Not tested yet: {dynamicFeatureImportance.filter(f => f.interactions === 0).map(f => f.name).join(', ')}
+                          {t.modelInfo.notTestedYet}: {dynamicFeatureImportance.filter(f => f.interactions === 0).map(f => t.sensors.sensorNames[f.sensor] || f.name).join(', ')}
                         </p>
                       </div>
                     )}
@@ -816,8 +808,8 @@ export default function Dashboard() {
                   <div className="h-48 flex items-center justify-center text-gray-500 border-2 border-dashed border-gray-700 rounded-lg">
                     <div className="text-center">
                       <p className="text-xl mb-2">🔬</p>
-                      <p>Start testing sensors to see which ones cause the most risk!</p>
-                      <p className="text-sm mt-2">Go to Live Simulation tab and adjust the sliders</p>
+                      <p>{t.modelInfo.startTesting}</p>
+                      <p className="text-sm mt-2">{t.modelInfo.goToLive}</p>
                     </div>
                   </div>
                 )}
@@ -826,10 +818,7 @@ export default function Dashboard() {
               {/* Recent Sensor Interactions Log */}
               <div className="card p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <span>📋</span> Recent Sensor Changes
-                  <span className="text-xs text-gray-400 font-normal ml-2">
-                    (Last 10 interactions)
-                  </span>
+                  <span>📋</span> {t.dashboard.sensorHistory}
                 </h3>
                 
                 {sensorHistory.length > 0 ? (
@@ -846,7 +835,7 @@ export default function Dashboard() {
                             interaction.riskDelta > 10 ? 'bg-red-500' :
                             interaction.riskDelta > 0 ? 'bg-amber-500' : 'bg-green-500'
                           }`} />
-                          <span className="text-gray-300">{interaction.sensor.replace(/_/g, ' ')}</span>
+                          <span className="text-gray-300">{t.sensors.sensorNames[interaction.sensor] || interaction.sensor.replace(/_/g, ' ')}</span>
                           <span className="text-gray-500">
                             {interaction.oldValue.toFixed(1)} → {interaction.newValue.toFixed(1)}
                           </span>
@@ -854,32 +843,29 @@ export default function Dashboard() {
                         <div className={`font-medium ${
                           interaction.riskDelta > 0 ? 'text-red-400' : 'text-green-400'
                         }`}>
-                          {interaction.riskDelta > 0 ? '+' : ''}{interaction.riskDelta.toFixed(1)}% risk
+                          {interaction.riskDelta > 0 ? '+' : ''}{interaction.riskDelta.toFixed(1)}% {t.modelInfo.risk}
                         </div>
                       </motion.div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 text-center py-8">No interactions yet. Start testing!</p>
+                  <p className="text-gray-500 text-center py-8">{t.general.noData}</p>
                 )}
               </div>
 
               {/* Historic Failures Section */}
               <div className="card p-6">
                 <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <span>📜</span> Historic Critical Errors
-                  <span className="text-xs text-gray-400 font-normal ml-2">
-                    ({historicFailures.length} historical + {sessionCriticalErrors.length} from this session)
-                  </span>
+                  <span>📜</span> {t.dashboard.historicFailures}
                 </h3>
                 
                 {/* Tabs for Historical vs Session */}
                 <div className="flex gap-2 mb-4">
                   <span className="px-3 py-1 rounded-full text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                    📁 {historicFailures.length} Historical Records (2019)
+                    📁 {historicFailures.length} {t.modelInfo.historicalRecords} (2019)
                   </span>
                   <span className="px-3 py-1 rounded-full text-xs bg-red-500/20 text-red-400 border border-red-500/30">
-                    🔴 {sessionCriticalErrors.length} Session Critical Errors
+                    🔴 {sessionCriticalErrors.length} {t.modelInfo.sessionCriticalErrors}
                   </span>
                 </div>
 
@@ -888,12 +874,12 @@ export default function Dashboard() {
                   <table className="w-full text-sm">
                     <thead className="sticky top-0 bg-ocp-dark">
                       <tr className="text-left text-gray-400 border-b border-white/10">
-                        <th className="pb-3 pr-4">Source</th>
-                        <th className="pb-3 pr-4">Date</th>
-                        <th className="pb-3 pr-4">Time</th>
-                        <th className="pb-3 pr-4">Type</th>
-                        <th className="pb-3 pr-4">Duration</th>
-                        <th className="pb-3">Description</th>
+                        <th className="pb-3 pr-4">{t.modelInfo.source}</th>
+                        <th className="pb-3 pr-4">{t.modelInfo.date}</th>
+                        <th className="pb-3 pr-4">{t.modelInfo.time}</th>
+                        <th className="pb-3 pr-4">{t.modelInfo.type}</th>
+                        <th className="pb-3 pr-4">{t.modelInfo.duration}</th>
+                        <th className="pb-3">{t.modelInfo.description}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -908,18 +894,18 @@ export default function Dashboard() {
                         >
                           <td className="py-3 pr-4">
                             <span className="px-2 py-1 rounded text-xs bg-red-500/20 text-red-400">
-                              🔴 Session
+                              🔴 {t.modelInfo.session}
                             </span>
                           </td>
                           <td className="py-3 pr-4 text-white">{error.date}</td>
                           <td className="py-3 pr-4 text-gray-300">{error.time}</td>
                           <td className="py-3 pr-4">
                             <span className="px-2 py-1 rounded text-xs bg-red-500/30 text-red-300">
-                              {error.failure_type}
+                              {t.modelInfo.failureTypes[error.failure_type] || error.failure_type}
                             </span>
                           </td>
                           <td className="py-3 pr-4 text-amber-400">{error.duration}</td>
-                          <td className="py-3 text-gray-300 max-w-md truncate">{error.description}</td>
+                          <td className="py-3 text-gray-300 max-w-md truncate">{t.modelInfo.failureDescriptions[error.description] || error.description}</td>
                         </motion.tr>
                       ))}
                       
@@ -934,7 +920,7 @@ export default function Dashboard() {
                         >
                           <td className="py-3 pr-4">
                             <span className="px-2 py-1 rounded text-xs bg-blue-500/20 text-blue-400">
-                              📁 Historical
+                              📁 {t.modelInfo.historical}
                             </span>
                           </td>
                           <td className="py-3 pr-4 text-white">{failure.date}</td>
@@ -947,18 +933,18 @@ export default function Dashboard() {
                               failure.failure_type === 'MECHANICAL' ? 'bg-yellow-500/30 text-yellow-300' :
                               'bg-gray-500/30 text-gray-300'
                             }`}>
-                              {failure.failure_type}
+                              {t.modelInfo.failureTypes[failure.failure_type] || failure.failure_type}
                             </span>
                           </td>
                           <td className="py-3 pr-4 text-amber-400">{failure.duration}</td>
-                          <td className="py-3 text-gray-300 max-w-md truncate">{failure.description}</td>
+                          <td className="py-3 text-gray-300 max-w-md truncate">{t.modelInfo.failureDescriptions[failure.description] || failure.description}</td>
                         </motion.tr>
                       ))}
                       
                       {historicFailures.length === 0 && sessionCriticalErrors.length === 0 && (
                         <tr>
                           <td colSpan={6} className="py-8 text-center text-gray-500">
-                            No failure records yet. Historical data will load from the API.
+                            {t.general.noData}
                           </td>
                         </tr>
                       )}
@@ -970,25 +956,25 @@ export default function Dashboard() {
                 <div className="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center p-3 rounded-lg bg-blue-500/10">
                     <p className="text-2xl font-bold text-blue-400">{historicFailures.length}</p>
-                    <p className="text-xs text-gray-400">Historical Failures</p>
+                    <p className="text-xs text-gray-400">{t.dashboard.historicFailures}</p>
                   </div>
                   <div className="text-center p-3 rounded-lg bg-red-500/10">
                     <p className="text-2xl font-bold text-red-400">{sessionCriticalErrors.length}</p>
-                    <p className="text-xs text-gray-400">Session Critical</p>
+                    <p className="text-xs text-gray-400">{t.modelInfo.sessionCriticalErrors}</p>
                   </div>
                   <div className="text-center p-3 rounded-lg bg-purple-500/10">
                     <p className="text-2xl font-bold text-purple-400">
                       {historicFailures.filter(f => f.failure_type === 'VIBRATION').length +
                        sessionCriticalErrors.filter(f => f.failure_type === 'VIBRATION').length}
                     </p>
-                    <p className="text-xs text-gray-400">Vibration Issues</p>
+                    <p className="text-xs text-gray-400">{t.modelInfo.vibrationIssues}</p>
                   </div>
                   <div className="text-center p-3 rounded-lg bg-orange-500/10">
                     <p className="text-2xl font-bold text-orange-400">
                       {historicFailures.filter(f => f.failure_type === 'TEMPERATURE' || f.failure_type === 'OVERHEATING').length +
                        sessionCriticalErrors.filter(f => f.failure_type === 'TEMPERATURE' || f.failure_type === 'OVERHEATING').length}
                     </p>
-                    <p className="text-xs text-gray-400">Temperature Issues</p>
+                    <p className="text-xs text-gray-400">{t.modelInfo.temperatureIssues}</p>
                   </div>
                 </div>
               </div>
@@ -1018,7 +1004,7 @@ export default function Dashboard() {
                   }}
                   className="px-6 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all"
                 >
-                  🔄 Reset All Data
+                  🔄 {t.modelInfo.resetAllData}
                 </button>
                 <button
                   onClick={async () => {
@@ -1033,7 +1019,7 @@ export default function Dashboard() {
                   }}
                   className="px-6 py-2 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 transition-all"
                 >
-                  📊 View Training Stats
+                  📊 {t.modelInfo.viewTrainingStats}
                 </button>
               </div>
             </motion.div>
@@ -1051,15 +1037,15 @@ export default function Dashboard() {
               {/* Model Architecture */}
               <div className="card p-6">
                 <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                  <span>🧠</span> LSTM Deep Learning Model
+                  <span>🧠</span> {t.modelInfo.title}
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                   {[
-                    { label: 'Architecture', value: 'Bidirectional LSTM', icon: '🏗️' },
-                    { label: 'Features', value: `${MODEL_INFO.features} input features`, icon: '📊' },
-                    { label: 'Parameters', value: MODEL_INFO.parameters.toLocaleString(), icon: '⚙️' },
-                    { label: 'Prediction Window', value: '24 hours', icon: '⏱️' },
+                    { label: t.modelInfo.architecture, value: t.modelInfo.bidirectionalLstm, icon: '🏗️' },
+                    { label: t.modelInfo.features, value: `${MODEL_INFO.features} ${t.modelInfo.inputFeatures}`, icon: '📊' },
+                    { label: t.modelInfo.parameters, value: MODEL_INFO.parameters.toLocaleString(), icon: '⚙️' },
+                    { label: t.modelInfo.predictionWindow, value: `24 ${t.general.hours}`, icon: '⏱️' },
                   ].map((item) => (
                     <div key={item.label} className="glass p-4 rounded-lg">
                       <span className="text-2xl">{item.icon}</span>
@@ -1076,12 +1062,12 @@ export default function Dashboard() {
                     <div className="text-center">
                       <div className="w-24 h-24 rounded-lg bg-blue-500/20 border border-blue-500/50 flex items-center justify-center mb-2">
                         <div className="text-blue-400">
-                          <p className="text-xs">Input</p>
+                          <p className="text-xs">{t.modelInfo.input}</p>
                           <p className="text-lg font-bold">22</p>
-                          <p className="text-xs">features</p>
+                          <p className="text-xs">{t.modelInfo.features.toLowerCase()}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500">Sensor Data</p>
+                      <p className="text-xs text-gray-500">{t.modelInfo.sensorData}</p>
                     </div>
 
                     <div className="text-ocp-green text-2xl">→</div>
@@ -1092,10 +1078,10 @@ export default function Dashboard() {
                         <div className="text-purple-400">
                           <p className="text-xs">Bi-LSTM</p>
                           <p className="text-lg font-bold">128</p>
-                          <p className="text-xs">units</p>
+                          <p className="text-xs">{t.modelInfo.units}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500">Temporal Patterns</p>
+                      <p className="text-xs text-gray-500">{t.modelInfo.temporalPatterns}</p>
                     </div>
 
                     <div className="text-ocp-green text-2xl">→</div>
@@ -1105,10 +1091,10 @@ export default function Dashboard() {
                         <div className="text-indigo-400">
                           <p className="text-xs">LSTM</p>
                           <p className="text-lg font-bold">64</p>
-                          <p className="text-xs">units</p>
+                          <p className="text-xs">{t.modelInfo.units}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500">Feature Learning</p>
+                      <p className="text-xs text-gray-500">{t.modelInfo.featureLearning}</p>
                     </div>
 
                     <div className="text-ocp-green text-2xl">→</div>
@@ -1119,10 +1105,10 @@ export default function Dashboard() {
                         <div className="text-green-400">
                           <p className="text-xs">Dense</p>
                           <p className="text-lg font-bold">32</p>
-                          <p className="text-xs">units</p>
+                          <p className="text-xs">{t.modelInfo.units}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500">Classification</p>
+                      <p className="text-xs text-gray-500">{t.modelInfo.classification}</p>
                     </div>
 
                     <div className="text-ocp-green text-2xl">→</div>
@@ -1131,12 +1117,12 @@ export default function Dashboard() {
                     <div className="text-center">
                       <div className="w-24 h-24 rounded-lg bg-ocp-green/20 border border-ocp-green/50 flex items-center justify-center mb-2">
                         <div className="text-ocp-green">
-                          <p className="text-xs">Output</p>
+                          <p className="text-xs">{t.modelInfo.output}</p>
                           <p className="text-lg font-bold">Sigmoid</p>
                           <p className="text-xs">0-1</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500">Risk Score</p>
+                      <p className="text-xs text-gray-500">{t.modelInfo.riskScore}</p>
                     </div>
                   </div>
                 </div>
@@ -1144,10 +1130,10 @@ export default function Dashboard() {
                 {/* Performance Metrics */}
                 <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
-                    { label: 'Recall', value: MODEL_INFO.recall, color: '#22c55e' },
-                    { label: 'Precision', value: MODEL_INFO.precision, color: '#3b82f6' },
-                    { label: 'F1-Score', value: MODEL_INFO.f1_score, color: '#8b5cf6' },
-                    { label: 'Dust Detection', value: MODEL_INFO.dust_detection_rate, color: '#f59e0b' },
+                    { label: t.modelInfo.recall, value: MODEL_INFO.recall, color: '#22c55e' },
+                    { label: t.modelInfo.precision, value: MODEL_INFO.precision, color: '#3b82f6' },
+                    { label: t.modelInfo.f1Score, value: MODEL_INFO.f1_score, color: '#8b5cf6' },
+                    { label: t.modelInfo.imbalanceDetection, value: MODEL_INFO.dust_detection_rate, color: '#f59e0b' },
                   ].map((metric) => (
                     <div key={metric.label} className="glass p-4 rounded-lg">
                       <p className="text-gray-400 text-sm">{metric.label}</p>
@@ -1172,47 +1158,32 @@ export default function Dashboard() {
 
               {/* How It Works */}
               <div className="card p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">How the AI Predicts Failures</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">{t.modelInfo.howAiPredicts}</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="glass p-4 rounded-lg">
                     <div className="text-3xl mb-3">📊</div>
-                    <h4 className="font-medium text-white mb-2">1. Data Collection</h4>
+                    <h4 className="font-medium text-white mb-2">1. {t.modelInfo.dataCollection}</h4>
                     <p className="text-sm text-gray-400">
-                      Sensors continuously monitor vibration, temperature, and current from Fan C07.
-                      Data is collected every minute.
+                      {t.modelInfo.dataCollectionDesc}
                     </p>
                   </div>
                   
                   <div className="glass p-4 rounded-lg">
                     <div className="text-3xl mb-3">🧠</div>
-                    <h4 className="font-medium text-white mb-2">2. Pattern Recognition</h4>
+                    <h4 className="font-medium text-white mb-2">2. {t.modelInfo.patternRecognition}</h4>
                     <p className="text-sm text-gray-400">
-                      The LSTM learns temporal patterns from 22 historical failures.
-                      It identifies the signature of impending failures.
+                      {t.modelInfo.patternRecognitionDesc}
                     </p>
                   </div>
                   
                   <div className="glass p-4 rounded-lg">
                     <div className="text-3xl mb-3">🚨</div>
-                    <h4 className="font-medium text-white mb-2">3. Early Warning</h4>
+                    <h4 className="font-medium text-white mb-2">3. {t.modelInfo.earlyWarning}</h4>
                     <p className="text-sm text-gray-400">
-                      When patterns match pre-failure conditions, alerts are triggered
-                      24 hours before failure occurs.
+                      {t.modelInfo.earlyWarningDesc}
                     </p>
                   </div>
-                </div>
-
-                <div className="mt-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-                  <h4 className="font-medium text-amber-400 flex items-center gap-2 mb-2">
-                    <span>🌫️</span> Dust (Balourd) Detection
-                  </h4>
-                  <p className="text-sm text-gray-300">
-                    The model specifically learned that <strong>vibration increases</strong> are the 
-                    strongest predictor of failure. This directly correlates with dust accumulation 
-                    on fan blades causing imbalance. When vibration rises without temperature spikes, 
-                    it indicates dust buildup — allowing targeted cleaning before failure.
-                  </p>
                 </div>
               </div>
             </motion.div>
@@ -1227,20 +1198,30 @@ export default function Dashboard() {
             <div className="flex items-center gap-3">
               <OCPLogo size="sm" showText={false} />
               <div>
-                <p className="text-sm text-gray-400">OCP Group - Predictive Maintenance</p>
+                <p className="text-sm text-gray-400">OCP Group - {t.header.predictiveMaintenance}</p>
                 <p className="text-xs text-gray-500">Powered by LSTM Deep Learning</p>
               </div>
             </div>
             
             <div className="text-center md:text-right">
-              <p className="text-sm text-gray-400">Line 307 • Fan C07</p>
+              <p className="text-sm text-gray-400">{t.dashboard.line307FanC07}</p>
               <p className="text-xs text-gray-500">
-                Preventing $4.4M+ in annual losses
+                {t.dashboard.preventingLosses}
               </p>
             </div>
           </div>
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function Dashboard() {
+  return (
+    <ThemeProvider>
+      <I18nProvider>
+        <DashboardContent />
+      </I18nProvider>
+    </ThemeProvider>
   );
 }

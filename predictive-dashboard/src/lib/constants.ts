@@ -84,9 +84,9 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     expected_risk: 'low',
   },
   {
-    id: 'dust_accumulation',
-    name: 'Dust Accumulation',
-    description: 'Early signs of dust buildup causing vibration increase.',
+    id: 'imbalance',
+    name: 'Imbalance Accumulation',
+    description: 'Early signs of imbalance buildup causing vibration increase.',
     icon: '🌫️',
     sensors: {
       motor_current: 25.2,
@@ -261,8 +261,8 @@ export const RISK_LEVELS = {
     bgColor: 'rgba(34, 197, 94, 0.1)',
     borderColor: 'rgba(34, 197, 94, 0.3)',
     icon: '✅',
-    description: 'System operating normally',
-    action: 'Continue routine monitoring',
+    description: '',
+    action: '',
     maxThreshold: 0.3,
   },
   medium: {
@@ -271,8 +271,8 @@ export const RISK_LEVELS = {
     bgColor: 'rgba(245, 158, 11, 0.1)',
     borderColor: 'rgba(245, 158, 11, 0.3)',
     icon: '⚡',
-    description: 'Early warning signs detected',
-    action: 'Increase monitoring frequency',
+    description: '',
+    action: '',
     maxThreshold: 0.5,
   },
   high: {
@@ -281,8 +281,8 @@ export const RISK_LEVELS = {
     bgColor: 'rgba(239, 68, 68, 0.1)',
     borderColor: 'rgba(239, 68, 68, 0.3)',
     icon: '⚠️',
-    description: 'Significant anomalies detected',
-    action: 'Schedule preventive maintenance',
+    description: '',
+    action: '',
     maxThreshold: 0.7,
   },
   critical: {
@@ -291,8 +291,8 @@ export const RISK_LEVELS = {
     bgColor: 'rgba(220, 38, 38, 0.15)',
     borderColor: 'rgba(220, 38, 38, 0.5)',
     icon: '🚨',
-    description: 'Failure likely within 24 hours',
-    action: 'Immediate inspection required',
+    description: '',
+    action: '',
     maxThreshold: 1.0,
   },
 };

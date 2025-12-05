@@ -512,7 +512,7 @@ def calculate_risk(sensors: SensorData) -> PredictionResult:
     
     # Rule 6: DUST IMBALANCE from Pump Flow - Low flow causes dust accumulation
     elif flow_low and not solid_high:
-        issue_type = "dust_accumulation"
+        issue_type = "imbalance"
         # Calculate dust probability based on flow reduction
         flow_deficit = (400 - sensors.pump_flow_rate) / 200  # 0 to 1 scale
         dust_probability = min(0.30 + (flow_deficit * 0.30), 0.60)  # Cap at 60%
@@ -520,7 +520,7 @@ def calculate_risk(sensors: SensorData) -> PredictionResult:
     
     # Rule 7: SOLID RATE HIGH - Direct dust detection (cap at 60%)
     elif solid_high or effective_solid_rate > 1.0:
-        issue_type = "dust_accumulation"
+        issue_type = "imbalance"
         # Cap dust probability at 60% for solid rate alone
         dust_probability = min(0.60, 0.30 + (effective_solid_rate - 1.0) * 0.15)
         if flow_low:
@@ -534,10 +534,18 @@ def calculate_risk(sensors: SensorData) -> PredictionResult:
         dust_probability = min(0.50, 0.25 + vib_risk * 0.25)
         diagnostic_message = "⚠️ MULTIPLE ISSUES: Mechanical problem combined with dust accumulation"
     
-    # Default: No specific issue detected
+    # Default: Check risk level to determine message
     else:
         issue_type = "none"
-        diagnostic_message = "✅ System operating normally"
+        # Only show "System operating normally" if risk is actually low
+        if risk_level == "low":
+            diagnostic_message = "✅ System operating normally"
+        elif risk_level == "medium":
+            diagnostic_message = "⚠️ Warning signs detected - Increase monitoring frequency"
+        elif risk_level == "high":
+            diagnostic_message = "🔶 Elevated risk detected - Schedule maintenance inspection"
+        else:  # critical
+            diagnostic_message = "🚨 Critical conditions - Immediate attention required"
         dust_probability = max(0.05, vib_risk * 0.1)
     
     dust_probability = min(dust_probability, 1.0)
@@ -620,7 +628,7 @@ def calculate_risk(sensors: SensorData) -> PredictionResult:
         actions = ["Lubricate bearings immediately", "Check bearing alignment", "Inspect for wear patterns", "Monitor vibration trends"]
     elif issue_type == "bearing_axle":
         actions = ["Stop and inspect bearing assembly", "Check axle alignment", "Verify shaft balance", "Replace bearings if worn"]
-    elif issue_type == "dust_accumulation":
+    elif issue_type == "imbalance":
         actions = ["Clean fan blades and filters", "Inspect air intake system", "Check dust extraction", "Increase cleaning frequency"]
     elif issue_type == "both":
         actions = ["Full maintenance inspection required", "Clean all filters and components", "Lubricate bearings", "Check alignment"]
@@ -635,6 +643,12 @@ def calculate_risk(sensors: SensorData) -> PredictionResult:
         else:
             actions = ["Continue routine monitoring"]
     
+    # Calculate time to failure - if risk is 100%, it's imminent (no hours left)
+    time_to_failure = None
+    if risk_probability >= 0.5:
+        hours = int((1 - risk_probability) * 48)
+        time_to_failure = hours if hours > 0 else None  # Don't show 0 hours
+    
     return PredictionResult(
         risk_probability=risk_probability,
         risk_level=risk_level,
@@ -644,7 +658,7 @@ def calculate_risk(sensors: SensorData) -> PredictionResult:
         confidence=0.85 + np.random.random() * 0.1,
         contributing_factors=contributing_factors,
         recommended_actions=actions,
-        time_to_failure_hours=int((1 - risk_probability) * 48) if risk_probability >= 0.5 else None,
+        time_to_failure_hours=time_to_failure,
         potential_savings=200000 if risk_probability >= 0.3 else 0,
         issue_type=issue_type,
         diagnostic_message=diagnostic_message

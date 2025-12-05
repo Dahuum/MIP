@@ -12,12 +12,14 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 import { TOP_FEATURES } from '@/lib/constants';
+import { useI18n } from '@/lib/i18n';
 
 interface FeatureImportanceProps {
   customFeatures?: typeof TOP_FEATURES;
 }
 
 export function FeatureImportance({ customFeatures }: FeatureImportanceProps) {
+  const { t } = useI18n();
   const features = customFeatures || TOP_FEATURES;
 
   const getCategoryColor = (category: string) => {
@@ -45,10 +47,11 @@ export function FeatureImportance({ customFeatures }: FeatureImportanceProps) {
         <div className="glass p-3 rounded-lg">
           <p className="text-white font-medium">{data.name}</p>
           <p className="text-gray-400 text-sm">
-            Importance: {(data.importance * 100).toFixed(1)}%
+            {t.modelInfo.importance}: {(data.importance * 100).toFixed(1)}%
           </p>
           <p className="text-xs capitalize" style={{ color: getCategoryColor(data.category) }}>
-            Category: {data.category}
+            {t.modelInfo.category}: {data.category === 'vibration' ? t.modelInfo.vibration : 
+              data.category === 'temperature' ? t.modelInfo.temperature : t.modelInfo.current}
           </p>
         </div>
       );
@@ -64,20 +67,20 @@ export function FeatureImportance({ customFeatures }: FeatureImportanceProps) {
     >
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-medium text-gray-400">
-          What the AI Learned (Feature Importance)
+          {t.modelInfo.whatAiLearned} ({t.stats.featureImportance})
         </h3>
         <div className="flex gap-3 text-xs">
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full bg-red-500" />
-            Vibration
+            {t.modelInfo.vibration}
           </span>
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full bg-amber-500" />
-            Temperature
+            {t.modelInfo.temperature}
           </span>
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full bg-green-500" />
-            Current
+            {t.modelInfo.current}
           </span>
         </div>
       </div>

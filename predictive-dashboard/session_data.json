@@ -1,9 +1,409 @@
 {
   "sessionCriticalErrors": [
     {
-      "timestamp": "2025-12-05T01:17:12.886Z",
+      "timestamp": "2025-12-05T04:34:32.450Z",
       "date": "2025-12-05",
-      "time": "02:17:12 AM",
+      "time": "05:34:32 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.1,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:36:49.127Z",
+      "date": "2025-12-05",
+      "time": "05:36:49 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:38:04.329Z",
+      "date": "2025-12-05",
+      "time": "05:38:04 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:38:25.490Z",
+      "date": "2025-12-05",
+      "time": "05:38:25 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:39:16.350Z",
+      "date": "2025-12-05",
+      "time": "05:39:16 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:41:18.343Z",
+      "date": "2025-12-05",
+      "time": "05:41:18 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:41:40.616Z",
+      "date": "2025-12-05",
+      "time": "05:41:40 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:43:31.435Z",
+      "date": "2025-12-05",
+      "time": "05:43:31 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:44:53.789Z",
+      "date": "2025-12-05",
+      "time": "05:44:53 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:45:27.416Z",
+      "date": "2025-12-05",
+      "time": "05:45:27 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:45:29.245Z",
+      "date": "2025-12-05",
+      "time": "05:45:29 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 52,
+        "vib_opposite": 0.8,
+        "vib_motor": 3.3,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:45:47.802Z",
+      "date": "2025-12-05",
+      "time": "05:45:47 AM",
+      "failure_type": "BEARING",
+      "duration": "Active",
+      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 25.2,
+        "temp_opposite": 62,
+        "temp_motor": 68,
+        "vib_opposite": 1.1,
+        "vib_motor": 2.4,
+        "valve_opening": 90,
+        "solid_rate": 1.5,
+        "pump_flow_rate": 350
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:45:50.217Z",
+      "date": "2025-12-05",
+      "time": "05:45:50 AM",
+      "failure_type": "IMBALANCE",
+      "duration": "Active",
+      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 2.8%, Flow: 260 m\u00b3/h)",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 26.2,
+        "temp_opposite": 82,
+        "temp_motor": 94,
+        "vib_opposite": 1.8,
+        "vib_motor": 3.2,
+        "valve_opening": 85,
+        "solid_rate": 2.8,
+        "pump_flow_rate": 260
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:48:47.852Z",
+      "date": "2025-12-05",
+      "time": "05:48:47 AM",
+      "failure_type": "IMBALANCE",
+      "duration": "Active",
+      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 2.8%, Flow: 260 m\u00b3/h)",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 26.2,
+        "temp_opposite": 82,
+        "temp_motor": 94,
+        "vib_opposite": 1.8,
+        "vib_motor": 3.2,
+        "valve_opening": 85,
+        "solid_rate": 2.8,
+        "pump_flow_rate": 260
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:48:58.499Z",
+      "date": "2025-12-05",
+      "time": "05:48:58 AM",
+      "failure_type": "IMBALANCE",
+      "duration": "Active",
+      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 3.5%, Flow: 390 m\u00b3/h)",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 26.2,
+        "temp_opposite": 82,
+        "temp_motor": 94,
+        "vib_opposite": 1.8,
+        "vib_motor": 3.2,
+        "valve_opening": 85,
+        "solid_rate": 2,
+        "pump_flow_rate": 390
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:49:17.231Z",
+      "date": "2025-12-05",
+      "time": "05:49:17 AM",
+      "failure_type": "IMBALANCE",
+      "duration": "Active",
+      "description": "\u26a0\ufe0f IMBALANCE DETECTING: Elevated solid rate (2.5%)",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 26.2,
+        "temp_opposite": 82,
+        "temp_motor": 94,
+        "vib_opposite": 1.8,
+        "vib_motor": 3.2,
+        "valve_opening": 85,
+        "solid_rate": 2.5,
+        "pump_flow_rate": 428
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:49:28.100Z",
+      "date": "2025-12-05",
+      "time": "05:49:28 AM",
+      "failure_type": "CRITICAL",
+      "duration": "Active",
+      "description": "\ud83d\udea8 Critical conditions - Immediate attention required",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 26.2,
+        "temp_opposite": 82,
+        "temp_motor": 93,
+        "vib_opposite": 1.8,
+        "vib_motor": 3.2,
+        "valve_opening": 85,
+        "solid_rate": 0,
+        "pump_flow_rate": 431
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:49:49.088Z",
+      "date": "2025-12-05",
+      "time": "05:49:49 AM",
+      "failure_type": "CRITICAL",
+      "duration": "Active",
+      "description": "\ud83d\udea8 Critical conditions - Immediate attention required",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 26,
+        "temp_opposite": 69,
+        "temp_motor": 88,
+        "vib_opposite": 1.8,
+        "vib_motor": 1.9,
+        "valve_opening": 85,
+        "solid_rate": 0,
+        "pump_flow_rate": 431
+      }
+    },
+    {
+      "timestamp": "2025-12-05T04:49:54.168Z",
+      "date": "2025-12-05",
+      "time": "05:49:54 AM",
+      "failure_type": "CRITICAL",
+      "duration": "Active",
+      "description": "\ud83d\udea8 Critical conditions - Immediate attention required",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 26,
+        "temp_opposite": 69,
+        "temp_motor": 87,
+        "vib_opposite": 1.8,
+        "vib_motor": 1.9,
+        "valve_opening": 85,
+        "solid_rate": 0,
+        "pump_flow_rate": 431
+      }
+    },
+    {
+      "timestamp": "2025-12-05T05:19:12.643Z",
+      "date": "2025-12-05",
+      "time": "06:19:12 AM",
+      "failure_type": "CRITICAL",
+      "duration": "Active",
+      "description": "\ud83d\udea8 Critical conditions - Immediate attention required",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 65,
+        "vib_opposite": 2,
+        "vib_motor": 1.2,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T05:22:06.078Z",
+      "date": "2025-12-05",
+      "time": "06:22:06 AM",
       "failure_type": "OVERHEATING",
       "duration": "Active",
       "description": "\ud83d\udd25 FAN OVERHEATING: Check cooling system and ventilation",
@@ -11,8 +411,28 @@
       "source": "session",
       "sensors": {
         "motor_current": 24.5,
-        "temp_opposite": 67,
-        "temp_motor": 95,
+        "temp_opposite": 44,
+        "temp_motor": 89,
+        "vib_opposite": 1,
+        "vib_motor": 1.2,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
+      }
+    },
+    {
+      "timestamp": "2025-12-05T05:26:44.568Z",
+      "date": "2025-12-05",
+      "time": "06:26:44 AM",
+      "failure_type": "OVERHEATING",
+      "duration": "Active",
+      "description": "\ud83d\udd25 FAN OVERHEATING: Check cooling system and ventilation",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 90,
         "vib_opposite": 0.8,
         "vib_motor": 1.2,
         "valve_opening": 93,
@@ -21,303 +441,123 @@
       }
     },
     {
-      "timestamp": "2025-12-05T01:33:25.393Z",
+      "timestamp": "2025-12-05T05:35:29.703Z",
       "date": "2025-12-05",
-      "time": "02:33:25 AM",
-      "failure_type": "DUST_ACCUMULATION",
+      "time": "06:35:29 AM",
+      "failure_type": "OVERHEATING",
       "duration": "Active",
-      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 2.8%, Flow: 260 m\u00b3/h)",
+      "description": "\ud83d\udd25 FAN OVERHEATING: Check cooling system and ventilation",
       "severity": "critical",
       "source": "session",
       "sensors": {
-        "motor_current": 26.2,
-        "temp_opposite": 82,
-        "temp_motor": 94,
-        "vib_opposite": 1.8,
-        "vib_motor": 3.2,
-        "valve_opening": 85,
-        "solid_rate": 2.8,
-        "pump_flow_rate": 260
+        "motor_current": 24.5,
+        "temp_opposite": 48,
+        "temp_motor": 90,
+        "vib_opposite": 0.8,
+        "vib_motor": 1.2,
+        "valve_opening": 93,
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
       }
     },
     {
-      "timestamp": "2025-12-05T01:33:29.998Z",
+      "timestamp": "2025-12-05T05:35:46.639Z",
       "date": "2025-12-05",
-      "time": "02:33:29 AM",
-      "failure_type": "DUST_ACCUMULATION",
-      "duration": "Active",
-      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 2.8%, Flow: 260 m\u00b3/h)",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 26.2,
-        "temp_opposite": 82,
-        "temp_motor": 94,
-        "vib_opposite": 1.8,
-        "vib_motor": 3.2,
-        "valve_opening": 85,
-        "solid_rate": 2.8,
-        "pump_flow_rate": 260
-      }
-    },
-    {
-      "timestamp": "2025-12-05T01:33:35.451Z",
-      "date": "2025-12-05",
-      "time": "02:33:35 AM",
-      "failure_type": "DUST_ACCUMULATION",
-      "duration": "Active",
-      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 2.8%, Flow: 260 m\u00b3/h)",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 26.2,
-        "temp_opposite": 82,
-        "temp_motor": 94,
-        "vib_opposite": 1.8,
-        "vib_motor": 3.2,
-        "valve_opening": 85,
-        "solid_rate": 2.8,
-        "pump_flow_rate": 260
-      }
-    },
-    {
-      "timestamp": "2025-12-05T02:27:27.903Z",
-      "date": "2025-12-05",
-      "time": "03:27:27 AM",
+      "time": "06:35:46 AM",
       "failure_type": "BEARING",
       "duration": "Active",
       "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
       "severity": "critical",
       "source": "session",
       "sensors": {
-        "motor_current": 24,
+        "motor_current": 24.5,
         "temp_opposite": 48,
-        "temp_motor": 52,
-        "vib_opposite": 1,
-        "vib_motor": 3.2,
+        "temp_motor": 60,
+        "vib_opposite": 0.8,
+        "vib_motor": 2.7,
         "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
       }
     },
     {
-      "timestamp": "2025-12-05T02:27:42.260Z",
+      "timestamp": "2025-12-05T05:35:57.142Z",
       "date": "2025-12-05",
-      "time": "03:27:42 AM",
+      "time": "06:35:57 AM",
       "failure_type": "BEARING",
       "duration": "Active",
       "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
       "severity": "critical",
       "source": "session",
       "sensors": {
-        "motor_current": 24,
+        "motor_current": 24.5,
         "temp_opposite": 48,
-        "temp_motor": 52,
-        "vib_opposite": 1,
-        "vib_motor": 3.6,
+        "temp_motor": 60,
+        "vib_opposite": 0.8,
+        "vib_motor": 2.7,
         "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
+        "solid_rate": 2,
+        "pump_flow_rate": 420
       }
     },
     {
-      "timestamp": "2025-12-05T02:27:46.127Z",
+      "timestamp": "2025-12-05T05:38:05.380Z",
       "date": "2025-12-05",
-      "time": "03:27:46 AM",
-      "failure_type": "BEARING",
+      "time": "06:38:05 AM",
+      "failure_type": "IMBALANCE",
       "duration": "Active",
-      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 3.5%, Flow: 375 m\u00b3/h)",
       "severity": "critical",
       "source": "session",
       "sensors": {
-        "motor_current": 24,
+        "motor_current": 24.5,
         "temp_opposite": 48,
         "temp_motor": 52,
-        "vib_opposite": 1,
-        "vib_motor": 3.1,
+        "vib_opposite": 0.8,
+        "vib_motor": 1.2,
         "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
       }
     },
     {
-      "timestamp": "2025-12-05T02:27:52.999Z",
+      "timestamp": "2025-12-05T05:38:06.847Z",
       "date": "2025-12-05",
-      "time": "03:27:52 AM",
-      "failure_type": "BEARING",
+      "time": "06:38:06 AM",
+      "failure_type": "IMBALANCE",
       "duration": "Active",
-      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
+      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 3.5%, Flow: 375 m\u00b3/h)",
       "severity": "critical",
       "source": "session",
       "sensors": {
-        "motor_current": 24,
+        "motor_current": 24.5,
         "temp_opposite": 48,
-        "temp_motor": 52,
-        "vib_opposite": 1,
-        "vib_motor": 3.1,
-        "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
-      }
-    },
-    {
-      "timestamp": "2025-12-05T02:28:01.802Z",
-      "date": "2025-12-05",
-      "time": "03:28:01 AM",
-      "failure_type": "BEARING",
-      "duration": "Active",
-      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 24,
-        "temp_opposite": 48,
-        "temp_motor": 52,
-        "vib_opposite": 1,
-        "vib_motor": 3.1,
-        "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
-      }
-    },
-    {
-      "timestamp": "2025-12-05T02:28:11.449Z",
-      "date": "2025-12-05",
-      "time": "03:28:11 AM",
-      "failure_type": "BEARING",
-      "duration": "Active",
-      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 24,
-        "temp_opposite": 48,
-        "temp_motor": 52,
-        "vib_opposite": 2.5,
-        "vib_motor": 3,
-        "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
-      }
-    },
-    {
-      "timestamp": "2025-12-05T02:28:44.446Z",
-      "date": "2025-12-05",
-      "time": "03:28:44 AM",
-      "failure_type": "BEARING",
-      "duration": "Active",
-      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 24,
-        "temp_opposite": 48,
-        "temp_motor": 52,
-        "vib_opposite": 2.5,
-        "vib_motor": 3,
-        "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
-      }
-    },
-    {
-      "timestamp": "2025-12-05T02:29:50.310Z",
-      "date": "2025-12-05",
-      "time": "03:29:50 AM",
-      "failure_type": "BEARING",
-      "duration": "Active",
-      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 24,
-        "temp_opposite": 48,
-        "temp_motor": 52,
-        "vib_opposite": 1.9,
-        "vib_motor": 3,
-        "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
-      }
-    },
-    {
-      "timestamp": "2025-12-05T02:29:53.860Z",
-      "date": "2025-12-05",
-      "time": "03:29:53 AM",
-      "failure_type": "BEARING",
-      "duration": "Active",
-      "description": "\u2699\ufe0f BEARING ISSUE: Lack of grease or starting imbalance",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 24,
-        "temp_opposite": 48,
-        "temp_motor": 52,
-        "vib_opposite": 2.5,
-        "vib_motor": 3,
-        "valve_opening": 93,
-        "solid_rate": 0,
-        "pump_flow_rate": 418
-      }
-    },
-    {
-      "timestamp": "2025-12-05T02:34:03.912Z",
-      "date": "2025-12-05",
-      "time": "03:34:03 AM",
-      "failure_type": "DUST_ACCUMULATION",
-      "duration": "Active",
-      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 3.5%, Flow: 388 m\u00b3/h)",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 24,
-        "temp_opposite": 48,
-        "temp_motor": 59,
-        "vib_opposite": 3.6,
-        "vib_motor": 2,
+        "temp_motor": 60,
+        "vib_opposite": 0.8,
+        "vib_motor": 2.7,
         "valve_opening": 93,
         "solid_rate": 3.5,
-        "pump_flow_rate": 388
+        "pump_flow_rate": 375
       }
     },
     {
-      "timestamp": "2025-12-05T02:34:29.845Z",
+      "timestamp": "2025-12-05T05:38:35.399Z",
       "date": "2025-12-05",
-      "time": "03:34:29 AM",
-      "failure_type": "DUST_ACCUMULATION",
+      "time": "06:38:35 AM",
+      "failure_type": "OVERHEATING",
       "duration": "Active",
-      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 3.5%, Flow: 388 m\u00b3/h)",
+      "description": "\ud83d\udd25 FAN OVERHEATING: Check cooling system and ventilation",
       "severity": "critical",
       "source": "session",
       "sensors": {
-        "motor_current": 24,
+        "motor_current": 24.5,
         "temp_opposite": 48,
-        "temp_motor": 63,
-        "vib_opposite": 3.6,
-        "vib_motor": 1.9,
+        "temp_motor": 90,
+        "vib_opposite": 0.8,
+        "vib_motor": 1.2,
         "valve_opening": 93,
-        "solid_rate": 3.5,
-        "pump_flow_rate": 388
-      }
-    },
-    {
-      "timestamp": "2025-12-05T02:34:44.604Z",
-      "date": "2025-12-05",
-      "time": "03:34:44 AM",
-      "failure_type": "DUST_ACCUMULATION",
-      "duration": "Active",
-      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 3.5%, Flow: 388 m\u00b3/h)",
-      "severity": "critical",
-      "source": "session",
-      "sensors": {
-        "motor_current": 24,
-        "temp_opposite": 48,
-        "temp_motor": 63,
-        "vib_opposite": 1.9,
-        "vib_motor": 2.5,
-        "valve_opening": 93,
-        "solid_rate": 3.5,
-        "pump_flow_rate": 388
+        "solid_rate": 0.5,
+        "pump_flow_rate": 420
       }
     }
   ],
@@ -331,14 +571,14 @@
   },
   "riskHistory": [],
   "currentSensors": {
-    "motor_current": 24.0,
+    "motor_current": 24.5,
     "temp_opposite": 48.0,
-    "temp_motor": 63.0,
-    "vib_opposite": 1.6,
-    "vib_motor": 2.3,
+    "temp_motor": 52.0,
+    "vib_opposite": 0.8,
+    "vib_motor": 1.2,
     "valve_opening": 93.0,
-    "solid_rate": 3.5,
-    "pump_flow_rate": 388.0
+    "solid_rate": 0.5,
+    "pump_flow_rate": 420.0
   },
-  "lastSensorUpdate": "2025-12-05T03:34:49.807380"
+  "lastSensorUpdate": "2025-12-05T06:50:45.257774"
 }

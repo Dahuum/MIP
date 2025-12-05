@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { formatCurrency, formatNumber } from '@/lib/utils';
+import { useI18n } from '@/lib/i18n';
 
 interface StatsCardProps {
   title: string;
@@ -68,35 +69,37 @@ interface DashboardStatsProps {
 }
 
 export function DashboardStats({ stats }: DashboardStatsProps) {
+  const { t } = useI18n();
+  
   const cards = [
     {
-      title: 'Failures Prevented',
+      title: t.stats.failuresPrevented,
       value: formatNumber(stats.failuresPrevented),
       icon: '🛡️',
       color: '#22c55e',
-      change: { value: 15, label: 'vs last month', positive: true },
+      change: { value: 15, label: t.stats.vsLastMonth, positive: true },
     },
     {
-      title: 'Total Savings',
+      title: t.stats.totalSavings,
       value: formatCurrency(stats.totalSavings),
       icon: '💰',
       color: '#C4A000',
-      change: { value: 23, label: 'vs projection', positive: true },
+      change: { value: 23, label: t.stats.vsProjection, positive: true },
     },
     {
-      title: 'Model Recall',
+      title: t.stats.modelRecall,
       value: `${(stats.modelAccuracy * 100).toFixed(0)}%`,
       icon: '🎯',
       color: '#00843D',
     },
     {
-      title: 'System Uptime',
+      title: t.stats.systemUptime,
       value: `${stats.uptime.toFixed(1)}%`,
       icon: '⚡',
       color: '#3b82f6',
     },
     {
-      title: 'Days Since Failure',
+      title: t.stats.daysSinceFailure,
       value: formatNumber(stats.daysSinceFailure),
       icon: '📅',
       color: '#8b5cf6',
@@ -119,6 +122,8 @@ interface ROICalculatorProps {
 }
 
 export function ROICalculator({ failuresCaught, costPerFailure = 200000 }: ROICalculatorProps) {
+  const { t } = useI18n();
+  
   const totalSavings = failuresCaught * costPerFailure;
   const implementationCost = 90000;
   const roi = ((totalSavings - implementationCost) / implementationCost) * 100;
@@ -131,28 +136,28 @@ export function ROICalculator({ failuresCaught, costPerFailure = 200000 }: ROICa
       animate={{ opacity: 1, y: 0 }}
     >
       <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-        <span>💰</span> Return on Investment
+        <span>💰</span> {t.stats.returnOnInvestment}
       </h3>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="text-center p-3 rounded-lg bg-green-500/10 border border-green-500/30">
           <p className="text-3xl font-bold text-green-400">{failuresCaught}</p>
-          <p className="text-xs text-gray-400">Failures Caught</p>
+          <p className="text-xs text-gray-400">{t.stats.failuresCaught}</p>
         </div>
         
         <div className="text-center p-3 rounded-lg bg-ocp-gold/10 border border-ocp-gold/30">
           <p className="text-3xl font-bold text-ocp-gold">{formatCurrency(totalSavings)}</p>
-          <p className="text-xs text-gray-400">Total Savings</p>
+          <p className="text-xs text-gray-400">{t.stats.totalSavings}</p>
         </div>
         
         <div className="text-center p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
           <p className="text-3xl font-bold text-blue-400">{roi.toFixed(0)}%</p>
-          <p className="text-xs text-gray-400">ROI</p>
+          <p className="text-xs text-gray-400">{t.stats.roi}</p>
         </div>
         
         <div className="text-center p-3 rounded-lg bg-purple-500/10 border border-purple-500/30">
-          <p className="text-3xl font-bold text-purple-400">{paybackMonths.toFixed(1)}mo</p>
-          <p className="text-xs text-gray-400">Payback Period</p>
+          <p className="text-3xl font-bold text-purple-400">{paybackMonths.toFixed(1)} {t.stats.months}</p>
+          <p className="text-xs text-gray-400">{t.stats.paybackPeriod}</p>
         </div>
       </div>
 

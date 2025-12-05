@@ -22,7 +22,7 @@ export interface PredictionResult {
   recommended_actions: string[];
   time_to_failure_hours: number | null;
   potential_savings: number;
-  issue_type: 'none' | 'dust_accumulation' | 'grease_check' | 'both' | 'electrical' | 'overheating' | 'bearing' | 'bearing_axle' | 'power_loss';
+  issue_type: 'none' | 'imbalance' | 'grease_check' | 'both' | 'electrical' | 'overheating' | 'bearing' | 'bearing_axle' | 'power_loss';
   diagnostic_message: string;  // Specific diagnostic message to display
 }
 

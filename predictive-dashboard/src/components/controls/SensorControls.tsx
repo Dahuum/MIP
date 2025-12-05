@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { SENSOR_INFO, SENSOR_THRESHOLDS } from '@/lib/constants';
 import { SensorData } from '@/types';
+import { useI18n } from '@/lib/i18n';
 
 interface SensorControlsProps {
   sensors: SensorData;
@@ -12,6 +13,8 @@ interface SensorControlsProps {
 }
 
 export function SensorControls({ sensors, onChange, disabled = false }: SensorControlsProps) {
+  const { t } = useI18n();
+  
   const handleChange = (key: keyof SensorData, value: number) => {
     const newSensors = { ...sensors, [key]: value };
     
@@ -30,15 +33,13 @@ export function SensorControls({ sensors, onChange, disabled = false }: SensorCo
   };
 
   // Custom display order for 4-column layout:
-  // Row 1: Motor Current | Solid Rate | Vib Opposite | Pump Flow Rate
-  // Row 2: Temp Opposite | Temp Motor | Vib Motor | Valve Opening
   const sensorKeys: Array<keyof SensorData> = [
     'motor_current', 'temp_motor', 'vib_motor', 'pump_flow_rate',
     'valve_opening', 'temp_opposite', 'vib_opposite', 'solid_rate',
   ];
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full">
       {sensorKeys.map((key, index) => {
         const info = SENSOR_INFO[key];
         const thresholds = SENSOR_THRESHOLDS[key];
@@ -55,87 +56,62 @@ export function SensorControls({ sensors, onChange, disabled = false }: SensorCo
         }
 
         const statusColors = {
-          normal: 'from-green-500 to-emerald-500',
-          warning: 'from-amber-500 to-orange-500',
-          critical: 'from-red-500 to-rose-500',
+          normal: 'bg-green-500',
+          warning: 'bg-amber-500',
+          critical: 'bg-red-500',
         };
 
-        const statusGlow = {
-          normal: 'shadow-green-500/30',
-          warning: 'shadow-amber-500/30',
-          critical: 'shadow-red-500/30',
+        const borderColors = {
+          normal: 'border-green-500/20 hover:border-green-500/40',
+          warning: 'border-amber-500/20 hover:border-amber-500/40',
+          critical: 'border-red-500/20 hover:border-red-500/40',
         };
 
         return (
           <motion.div
             key={key}
-            className={`card p-4 transition-all duration-300 ${statusGlow[status]} shadow-lg`}
-            initial={{ opacity: 0, y: 20 }}
+            className={`bg-white/5 border ${borderColors[status]} rounded-xl p-3 transition-all duration-300`}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: index * 0.05 }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">{info.icon}</span>
-                <span className="text-sm font-medium text-gray-300">{info.label}</span>
+            {/* Header */}
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <span className="text-lg">{info.icon}</span>
+                <span className="text-xs font-medium text-gray-400">{t.sensors.sensorNames[key] || info.label}</span>
               </div>
-              <div className={`
-                px-2 py-0.5 rounded-full text-xs font-medium
-                bg-gradient-to-r ${statusColors[status]} text-white
-              `}>
-                {status.toUpperCase()}
-              </div>
+              <div className={`w-2 h-2 rounded-full ${statusColors[status]}`} />
             </div>
 
-            <div className="flex items-end gap-2 mb-4">
-              <span className="text-3xl font-bold text-white">
+            {/* Value */}
+            <div className="flex items-baseline gap-1 mb-2">
+              <span className="text-2xl font-bold text-white">
                 {value.toFixed(key.includes('vib') ? 2 : 1)}
               </span>
-              <span className="text-gray-400 text-sm mb-1">{info.unit}</span>
+              <span className="text-gray-500 text-xs">{info.unit}</span>
             </div>
 
-            <div className="relative">
-              <input
-                type="range"
-                min={thresholds.min}
-                max={thresholds.max}
-                step={key.includes('vib') ? 0.1 : 1}
-                value={value}
-                onChange={(e) => handleChange(key, parseFloat(e.target.value))}
-                disabled={disabled}
-                className="w-full h-2 rounded-lg appearance-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
-              />
-              
-              {/* Threshold markers */}
-              <div className="relative h-2 mt-2">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-amber-500/20 to-red-500/20 rounded" />
-                
-                {/* Warning threshold */}
-                <div 
-                  className="absolute top-0 h-full w-0.5 bg-amber-500"
-                  style={{ 
-                    left: `${((thresholds.warning - thresholds.min) / (thresholds.max - thresholds.min)) * 100}%` 
-                  }}
-                />
-                
-                {/* Critical threshold */}
-                <div 
-                  className="absolute top-0 h-full w-0.5 bg-red-500"
-                  style={{ 
-                    left: `${((thresholds.critical - thresholds.min) / (thresholds.max - thresholds.min)) * 100}%` 
-                  }}
-                />
-              </div>
-
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>{thresholds.min}</span>
-                <span className="text-amber-500">{thresholds.warning}</span>
-                <span className="text-red-500">{thresholds.critical}</span>
-                <span>{thresholds.max}</span>
-              </div>
+            {/* Slider */}
+            <input
+              type="range"
+              min={thresholds.min}
+              max={thresholds.max}
+              step={key.includes('vib') ? 0.1 : 1}
+              value={value}
+              onChange={(e) => handleChange(key, parseFloat(e.target.value))}
+              disabled={disabled}
+              className="w-full h-1.5 rounded-lg appearance-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 bg-white/10"
+              style={{
+                background: `linear-gradient(to right, ${status === 'normal' ? '#22c55e' : status === 'warning' ? '#f59e0b' : '#ef4444'} 0%, ${status === 'normal' ? '#22c55e' : status === 'warning' ? '#f59e0b' : '#ef4444'} ${((value - thresholds.min) / (thresholds.max - thresholds.min)) * 100}%, rgba(255,255,255,0.1) ${((value - thresholds.min) / (thresholds.max - thresholds.min)) * 100}%, rgba(255,255,255,0.1) 100%)`
+              }}
+            />
+            
+            {/* Min/Max labels */}
+            <div className="flex justify-between text-[10px] text-gray-500 mt-1">
+              <span>{thresholds.min}</span>
+              <span>{thresholds.max}</span>
             </div>
-
-            <p className="text-xs text-gray-500 mt-2">{info.description}</p>
           </motion.div>
         );
       })}
@@ -145,6 +121,8 @@ export function SensorControls({ sensors, onChange, disabled = false }: SensorCo
 
 // Compact sensor display
 export function SensorDisplay({ sensors }: { sensors: SensorData }) {
+  const { t } = useI18n();
+  
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
       {(Object.keys(sensors) as Array<keyof SensorData>).map((key) => {
@@ -173,6 +151,10 @@ export function SensorDisplay({ sensors }: { sensors: SensorData }) {
           critical: 'text-red-400',
         };
 
+        // Get first word of translated label
+        const translatedLabel = t.sensors.sensorNames[key] || info.label;
+        const shortLabel = translatedLabel.split(' ')[0];
+
         return (
           <div
             key={key}
@@ -180,7 +162,7 @@ export function SensorDisplay({ sensors }: { sensors: SensorData }) {
           >
             <div className="flex items-center gap-1 mb-1">
               <span className="text-sm">{info.icon}</span>
-              <span className="text-xs text-gray-400 truncate">{info.label.split(' ')[0]}</span>
+              <span className="text-xs text-gray-400 truncate">{shortLabel}</span>
             </div>
             <div className="flex items-baseline gap-1">
               <span className={`text-xl font-bold ${textColors[status]}`}>

@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { RISK_LEVELS } from '@/lib/constants';
 import { formatPercent } from '@/lib/utils';
+import { useI18n } from '@/lib/i18n';
 
 interface RiskGaugeProps {
   value: number; // 0 to 1
@@ -18,6 +19,7 @@ export function RiskGauge({
   showLabel = true,
   animated = true 
 }: RiskGaugeProps) {
+  const { t } = useI18n();
   const clampedValue = Math.min(Math.max(value, 0), 1);
   const percentage = Math.round(clampedValue * 100);
   
@@ -28,28 +30,44 @@ export function RiskGauge({
     clampedValue >= 0.3 ? 'medium' : 'low';
   
   const risk = RISK_LEVELS[riskLevel];
+  
+  // Get translated risk label
+  const getRiskLabel = () => {
+    switch (riskLevel) {
+      case 'low': return t.risk.low;
+      case 'medium': return t.risk.medium;
+      case 'high': return t.risk.high;
+      case 'critical': return t.risk.critical;
+      default: return risk.label;
+    }
+  };
 
   const sizes = {
-    sm: { width: 160, strokeWidth: 12, fontSize: 'text-2xl', labelSize: 'text-xs' },
-    md: { width: 220, strokeWidth: 16, fontSize: 'text-4xl', labelSize: 'text-sm' },
-    lg: { width: 300, strokeWidth: 20, fontSize: 'text-5xl', labelSize: 'text-base' },
+    sm: { width: 140, strokeWidth: 10, fontSize: 'text-xl', labelSize: 'text-[10px]' },
+    md: { width: 180, strokeWidth: 12, fontSize: 'text-3xl', labelSize: 'text-xs' },
+    lg: { width: 240, strokeWidth: 16, fontSize: 'text-4xl', labelSize: 'text-sm' },
   };
 
   const config = sizes[size];
   const radius = (config.width - config.strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference * (1 - clampedValue * 0.75); // 270 degrees
+  
+  // Arc covers 270 degrees (0.75 of circle)
+  // strokeDashoffset should go from full arc (no fill) to 0 (full fill)
+  const arcLength = circumference * 0.75;
+  const filledLength = arcLength * clampedValue;
+  const strokeDashoffset = arcLength - filledLength;
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative" style={{ width: config.width, height: config.width * 0.75 }}>
+      <div className="relative" style={{ width: config.width, height: config.width * 0.7 }}>
         <svg 
           width={config.width} 
           height={config.width} 
           className="transform -rotate-[135deg]"
-          style={{ marginTop: -config.width * 0.125 }}
+          style={{ marginTop: -config.width * 0.15 }}
         >
-          {/* Background arc */}
+          {/* Background arc - subtle gray */}
           <circle
             cx={config.width / 2}
             cy={config.width / 2}
@@ -58,56 +76,58 @@ export function RiskGauge({
             stroke="rgba(255, 255, 255, 0.1)"
             strokeWidth={config.strokeWidth}
             strokeLinecap="round"
-            strokeDasharray={`${circumference * 0.75} ${circumference}`}
+            strokeDasharray={`${arcLength} ${circumference}`}
           />
           
-          {/* Risk zone indicators */}
+          {/* Risk zone indicators (background segments) */}
+          {/* Green zone: 0-30% */}
           <circle
             cx={config.width / 2}
             cy={config.width / 2}
             r={radius}
             fill="none"
-            stroke="rgba(34, 197, 94, 0.3)"
+            stroke="rgba(34, 197, 94, 0.2)"
             strokeWidth={config.strokeWidth - 4}
-            strokeLinecap="round"
-            strokeDasharray={`${circumference * 0.225} ${circumference}`}
+            strokeDasharray={`${arcLength * 0.3} ${circumference}`}
+            strokeDashoffset={0}
           />
+          {/* Yellow zone: 30-50% */}
           <circle
             cx={config.width / 2}
             cy={config.width / 2}
             r={radius}
             fill="none"
-            stroke="rgba(245, 158, 11, 0.3)"
+            stroke="rgba(245, 158, 11, 0.2)"
             strokeWidth={config.strokeWidth - 4}
-            strokeLinecap="round"
-            strokeDasharray={`${circumference * 0.15} ${circumference}`}
-            strokeDashoffset={-circumference * 0.225}
+            strokeDasharray={`${arcLength * 0.2} ${circumference}`}
+            strokeDashoffset={-arcLength * 0.3}
           />
+          {/* Orange/Red zone: 50-70% */}
           <circle
             cx={config.width / 2}
             cy={config.width / 2}
             r={radius}
             fill="none"
-            stroke="rgba(239, 68, 68, 0.3)"
+            stroke="rgba(239, 68, 68, 0.2)"
             strokeWidth={config.strokeWidth - 4}
-            strokeLinecap="round"
-            strokeDasharray={`${circumference * 0.15} ${circumference}`}
-            strokeDashoffset={-circumference * 0.375}
+            strokeDasharray={`${arcLength * 0.2} ${circumference}`}
+            strokeDashoffset={-arcLength * 0.5}
           />
+          {/* Critical zone: 70-100% */}
           <circle
             cx={config.width / 2}
             cy={config.width / 2}
             r={radius}
             fill="none"
-            stroke="rgba(220, 38, 38, 0.3)"
+            stroke="rgba(220, 38, 38, 0.2)"
             strokeWidth={config.strokeWidth - 4}
-            strokeLinecap="round"
-            strokeDasharray={`${circumference * 0.225} ${circumference}`}
-            strokeDashoffset={-circumference * 0.525}
+            strokeDasharray={`${arcLength * 0.3} ${circumference}`}
+            strokeDashoffset={-arcLength * 0.7}
           />
           
-          {/* Value arc */}
+          {/* Value arc - shows the actual filled percentage */}
           <motion.circle
+            key={`arc-${riskLevel}`}
             cx={config.width / 2}
             cy={config.width / 2}
             r={radius}
@@ -115,13 +135,13 @@ export function RiskGauge({
             stroke={risk.color}
             strokeWidth={config.strokeWidth}
             strokeLinecap="round"
-            strokeDasharray={`${circumference * 0.75} ${circumference}`}
-            initial={{ strokeDashoffset: circumference }}
-            animate={{ strokeDashoffset }}
-            transition={{ duration: animated ? 1.5 : 0, ease: 'easeOut' }}
-            style={{
-              filter: `drop-shadow(0 0 10px ${risk.color})`,
+            strokeDasharray={`${arcLength} ${circumference}`}
+            initial={{ strokeDashoffset: arcLength }}
+            animate={{ 
+              strokeDashoffset,
+              filter: `drop-shadow(0 0 8px ${risk.color})`,
             }}
+            transition={{ duration: animated ? 1.5 : 0, ease: 'easeOut' }}
           />
         </svg>
 
@@ -144,28 +164,36 @@ export function RiskGauge({
             transition={{ delay: 0.7 }}
           >
             <span>{risk.icon}</span>
-            <span style={{ color: risk.color }}>{risk.label}</span>
+            <span style={{ color: risk.color }}>{getRiskLabel()}</span>
           </motion.div>
         </div>
 
-        {/* Glow effect */}
-        <div 
-          className="absolute inset-0 rounded-full blur-2xl opacity-30"
+        {/* Glow effect - positioned at center and uses current risk color */}
+        <motion.div 
+          key={riskLevel} // Force re-render when risk level changes
+          className="absolute rounded-full blur-2xl pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.35 }}
           style={{ 
-            background: `radial-gradient(circle, ${risk.color} 0%, transparent 70%)`,
+            background: risk.color,
+            width: config.width * 0.7,
+            height: config.width * 0.5,
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
           }}
         />
       </div>
 
-      {showLabel && (
+      {showLabel && risk.description && (
         <motion.div 
-          className="text-center mt-4"
+          className="text-center mt-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          <p className="text-gray-400 text-sm">{risk.description}</p>
-          <p className="text-gray-300 text-xs mt-1 font-medium">{risk.action}</p>
+          <p className="text-gray-400 text-xs">{risk.description}</p>
+          {risk.action && <p className="text-gray-300 text-[11px] mt-0.5 font-medium">{risk.action}</p>}
         </motion.div>
       )}
     </div>
