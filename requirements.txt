@@ -31,9 +31,11 @@ defusedxml==0.7.1
 et_xmlfile==2.0.0
 executing==2.2.1
 fastjsonschema==2.21.2
+filelock==3.20.0
 flatbuffers==25.9.23
 fonttools==4.61.0
 fqdn==1.5.1
+fsspec==2025.12.0
 gast==0.7.0
 gitdb==4.0.12
 GitPython==3.1.45
@@ -88,12 +90,14 @@ mdit-py-plugins==0.5.0
 mdurl==0.1.2
 mistune==3.1.4
 ml_dtypes==0.5.4
+mpmath==1.3.0
 namex==0.1.0
 narwhals==2.13.0
 nbclient==0.10.2
 nbconvert==7.16.6
 nbformat==5.10.4
 nest-asyncio==1.6.0
+networkx==3.6
 notebook==7.5.0
 notebook_shim==0.2.4
 numba==0.62.1
@@ -149,6 +153,7 @@ SQLAlchemy==2.0.44
 stack-data==0.6.3
 statsmodels==0.14.5
 streamlit==1.51.0
+sympy==1.14.0
 tenacity==9.1.2
 tensorboard==2.20.0
 tensorboard-data-server==0.7.2
@@ -157,6 +162,7 @@ terminado==0.18.1
 threadpoolctl==3.6.0
 tinycss2==1.4.0
 toml==0.10.2
+torch==2.9.1
 tornado==6.5.2
 tqdm==4.67.1
 traitlets==5.14.3
