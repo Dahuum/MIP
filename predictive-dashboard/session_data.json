@@ -559,6 +559,26 @@
         "solid_rate": 0.5,
         "pump_flow_rate": 420
       }
+    },
+    {
+      "timestamp": "2025-12-05T05:55:31.618Z",
+      "date": "2025-12-05",
+      "time": "06:55:31 AM",
+      "failure_type": "IMBALANCE",
+      "duration": "Active",
+      "description": "\ud83c\udf2b\ufe0f IMBALANCE DETECTED: Dust in system (Solid Rate: 2.2%, Flow: 310 m\u00b3/h)",
+      "severity": "critical",
+      "source": "session",
+      "sensors": {
+        "motor_current": 25.8,
+        "temp_opposite": 75,
+        "temp_motor": 84,
+        "vib_opposite": 1.4,
+        "vib_motor": 2.7,
+        "valve_opening": 87,
+        "solid_rate": 2.2,
+        "pump_flow_rate": 310
+      }
     }
   ],
   "sensorHistory": [],
@@ -571,14 +591,14 @@
   },
   "riskHistory": [],
   "currentSensors": {
-    "motor_current": 24.5,
+    "motor_current": 26.0,
     "temp_opposite": 48.0,
-    "temp_motor": 52.0,
+    "temp_motor": 62.0,
     "vib_opposite": 0.8,
     "vib_motor": 1.2,
     "valve_opening": 93.0,
     "solid_rate": 0.5,
     "pump_flow_rate": 420.0
   },
-  "lastSensorUpdate": "2025-12-05T06:50:45.257774"
+  "lastSensorUpdate": "2025-12-05T06:55:47.138257"
 }
