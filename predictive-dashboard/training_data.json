@@ -1,0 +1,274 @@
+[
+  {
+    "timestamp": "2025-12-05T02:17:12.893371",
+    "sensors": {
+      "motor_current": 24.5,
+      "temp_opposite": 67,
+      "temp_motor": 95,
+      "vib_opposite": 0.8,
+      "vib_motor": 1.2,
+      "valve_opening": 93,
+      "solid_rate": 0.5,
+      "pump_flow_rate": 420
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "overheating",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T02:33:25.402255",
+    "sensors": {
+      "motor_current": 26.2,
+      "temp_opposite": 82,
+      "temp_motor": 94,
+      "vib_opposite": 1.8,
+      "vib_motor": 3.2,
+      "valve_opening": 85,
+      "solid_rate": 2.8,
+      "pump_flow_rate": 260
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "dust_accumulation",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T02:33:30.000875",
+    "sensors": {
+      "motor_current": 26.2,
+      "temp_opposite": 82,
+      "temp_motor": 94,
+      "vib_opposite": 1.8,
+      "vib_motor": 3.2,
+      "valve_opening": 85,
+      "solid_rate": 2.8,
+      "pump_flow_rate": 260
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "dust_accumulation",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T02:33:35.455695",
+    "sensors": {
+      "motor_current": 26.2,
+      "temp_opposite": 82,
+      "temp_motor": 94,
+      "vib_opposite": 1.8,
+      "vib_motor": 3.2,
+      "valve_opening": 85,
+      "solid_rate": 2.8,
+      "pump_flow_rate": 260
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "dust_accumulation",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:27:27.912290",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 1,
+      "vib_motor": 3.2,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:27:42.268057",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 1,
+      "vib_motor": 3.6,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:27:46.128918",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 1,
+      "vib_motor": 3.1,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:27:53.001803",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 1,
+      "vib_motor": 3.1,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:28:01.806082",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 1,
+      "vib_motor": 3.1,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:28:11.452347",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 2.5,
+      "vib_motor": 3,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:28:44.449445",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 2.5,
+      "vib_motor": 3,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:29:50.318506",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 1.9,
+      "vib_motor": 3,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:29:53.866262",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 52,
+      "vib_opposite": 2.5,
+      "vib_motor": 3,
+      "valve_opening": 93,
+      "solid_rate": 0,
+      "pump_flow_rate": 418
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "bearing",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:34:03.917119",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 59,
+      "vib_opposite": 3.6,
+      "vib_motor": 2,
+      "valve_opening": 93,
+      "solid_rate": 3.5,
+      "pump_flow_rate": 388
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "dust_accumulation",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:34:29.861178",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 63,
+      "vib_opposite": 3.6,
+      "vib_motor": 1.9,
+      "valve_opening": 93,
+      "solid_rate": 3.5,
+      "pump_flow_rate": 388
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "dust_accumulation",
+    "is_critical": true
+  },
+  {
+    "timestamp": "2025-12-05T03:34:44.613868",
+    "sensors": {
+      "motor_current": 24,
+      "temp_opposite": 48,
+      "temp_motor": 63,
+      "vib_opposite": 1.9,
+      "vib_motor": 2.5,
+      "valve_opening": 93,
+      "solid_rate": 3.5,
+      "pump_flow_rate": 388
+    },
+    "risk_probability": 0.8,
+    "risk_level": "critical",
+    "issue_type": "dust_accumulation",
+    "is_critical": true
+  }
+]

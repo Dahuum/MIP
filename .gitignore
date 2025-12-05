@@ -1,2 +1,10 @@
 Dataframemin.csv
 labeled_data.csv
+labeled_data_with_dust.csv
+Dataframemin_BACKUP.csv
+Dataframemin_CLEANED.csv
+*.pkl
+.DS_Store
+__pycache__/
+.next/
+node_modules/
